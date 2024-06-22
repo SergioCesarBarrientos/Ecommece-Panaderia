@@ -1,0 +1,38 @@
+<%- include('../partials/head')%>
+
+
+    <div class="formulario">
+        <div class="ingreso">
+
+            <h2>Registrate!</h2>
+
+            <form action="/register" method="POST">
+
+
+                <div class="nombre">
+                <i class="fa-solid fa-user-plus"></i>
+                <input type="text" name="username" placeholder="Nombre Completo...">
+                </div>
+                <div class="usuario">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Correo Electronico...">
+                </div>
+                <div class="contraseña">
+                    <i class="fa-solid fa-lock"></i>
+                     <input type="password" name="password" placeholder="Contraseña...">
+                </div>
+               
+
+                <button type="submit">Registrate</button>
+
+
+            </form>
+
+            <h3>Al registrarte, aceptas nuestras Condiciones de uso y Politica de privacidad.</h3>
+            <h3>¿Ya tienes una cuenta? <a href="/login">Inicia Sesión</a></h3>
+
+
+
+        </div>
+    </div>
+    <%- include('../partials/footer')%>

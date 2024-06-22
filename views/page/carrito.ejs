@@ -1,0 +1,37 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+
+    <div class="izquierda">
+        <div class="producto">
+            <img src="/images/<%= product.imagen %>" alt="">
+            <div class="produt-info">
+                <h2><%= product.nombre%> </h2>
+                <p> <%= product.descripcion%> </p>  
+                <button class="quantity-btn">-</button>
+                <input type="text" class="quantity-input" placeholder="1">
+                <button class="quantity-btn">+</button>
+                <span class="price"><strong>$<%= product.precio %></strong></span>
+            </div>
+        </div>
+    </div>
+    <div class="derecha">
+        <div class="total-container">
+            <p>Total: <strong>$<%= product.precio %></strong></p>
+
+                <button class="buy-btn">Comprar</button>
+        
+            <button>Eliminar</button>
+            
+            <div class="total-icons">
+                <i class="fa-brands fa-paypal"></i>
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<%- include('../partials/footer')%>

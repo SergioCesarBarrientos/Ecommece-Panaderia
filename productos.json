@@ -1,0 +1,72 @@
+[
+    {
+      "id": 1,
+      "nombre": "Pretzel",
+      "descripcion": "Un pretzel sabor canela con polvo de azucar perfecto para cada ocasion y delicioso en cualquier momento.",
+      "precio": 1000,
+      "imagen": "pretzel.jpg"
+    },
+    {
+      "id": 2,
+      "nombre": "Croissant",
+      "descripcion": "Un croissant fresco y hojaldrado, ideal para desayunos.",
+      "precio": 1500,
+      "imagen": "croissant.jpg"
+    },
+    {
+      "id": 3,
+      "nombre": "Cookies",
+      "descripcion": "Un pack de cookies crujientes sabor canela con chispas de chocolate",
+      "precio": 3000,
+      "imagen": "cookies.jpg"
+    },
+    {
+      "id": 4,
+      "nombre": "Muffin de Arándanos",
+      "descripcion": "Muffin esponjoso con arándanos frescos.",
+      "precio": 3000,
+      "imagen": "muffins.jpg"
+    },
+    {
+      "id": 5,
+      "nombre": "Macarons",
+      "descripcion": "Pack de macarons ideales para regalo",
+      "precio": 2000,
+      "imagen": "macarons.jpg"
+    },
+    {
+      "id": 6,
+      "nombre": "Donuts",
+      "descripcion": "Un pack de donuts esponjosas con glaseado dulce.",
+      "precio": 3000,
+      "imagen": "donuts.jpg"
+    },
+    {
+      "id": 7,
+      "nombre": "Baguette",
+      "descripcion": "Un pan crujiente y dorado, perfecto para acompañar cualquier comida.",
+      "precio": 2000,
+      "imagen": "baguette.jpg"
+    },
+    {
+      "id": 8,
+      "nombre": "Pan de masa",
+      "descripcion": "Pan muy apetitoso que sorprende tanto por su sabor y textura, como por su prolongada conservación",
+      "precio": 1500,
+      "imagen": "pan_de_masa.jpg"
+    },
+    {
+      "id": 9,
+      "nombre": "Pan Lactal",
+      "descripcion": "Un pan esponjoso, suave y blando perfecto para desayunos o meriendas",
+      "precio": 2500,
+      "imagen": "pan_lactal.jpg"
+    },
+    {
+      "id": 10,
+      "nombre": "Pan Integral",
+      "descripcion": "Pan realizado con harina integral. Sin agregado de azúcar ni grasas. Apto para veganos",
+      "precio": 2000,
+      "imagen": "pan_integral.jpg"
+    }
+  ]
