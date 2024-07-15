@@ -1,29 +1,28 @@
 <%- include('../partials/head')%>
 
-    <div class="formulario">
+            <div class="formulario">
+                <div class="ingreso">
+                    <h2>Ingrese Sesión! </h2>
 
-        <div class="ingreso">
-            <h2>Ingrese Sesión! </h2>
+                    <form action="/login" method="post">
 
-            <form action="/login" method="post">
+                        <div class="usuario">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" name="email" placeholder="Correo Electronico...">
+                        </div>
+                        <div class="contraseña">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" placeholder="Contraseña...">
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
 
-                <div class="usuario">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="email" name="email" placeholder="Correo Electronico...">
+                    <h3>Al registrarte, aceptas nuestras Condiciones de uso y Politica de privacidad.</h3>
+                    <h3>¿No tienes una cuenta? <a href="/register"> Registrate!</a></h3>
+
+
                 </div>
-                <div class="contraseña">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" name="password" placeholder="Contraseña...">
-                </div>
-                <button type="submit">Login</button>
-            </form>
 
-            <h3>Al registrarte, aceptas nuestras Condiciones de uso y Politica de privacidad.</h3>
-            <h3>¿No tienes una cuenta? <a href="/register">  Registrate!</a></h3>
+            </div>
 
-
-        </div>
-
-    </div>
-
-    <%- include('../partials/footer')%>
+            <%- include('../partials/footer')%>

@@ -3,33 +3,56 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const connectDB = require('./config/connectDB');
-const productsRouter = require('./routes/products')
-const bcrypt = require("bcrypt") // importo el paquete bcrypt que sirve para proporcionarme un hash
-const collection = require("./models/user")
+const productsRouter = require('./routes/products');
+const mongoose = require('mongoose')
+const users = require('./models/user')
+const bcrypt = require("bcrypt"); // importo el paquete bcrypt que sirve para proporcionarme un hash
 const session = require('express-session');
+const MongoDBSession = require ('connect-mongodb-session')(session);
+
+
+const mongoURI = "mongodb://localhost:27017/Panaderia";
+
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}). then ((res)=>{
+    console.log ("MongoDB conectado")
+})
+
+// Declarar store antes de usarlo en la configuración de session
+const store = new MongoDBSession({
+    uri: mongoURI,
+    collection: "mySessions",
+});
 
 
 //MIDDLEWARE
 app.set("view engine", "ejs");
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(session({
-    secret: '12345', 
+app.use(
+    session
+    ({secret: 'secret key', 
     resave: false,
-    saveUninitialized: true
-}));
+    saveUninitialized: true,
+    store: store,
+     })
+);
 
 
+const isAuth = (req, res, next) => {
+    if (req.session.isAuth) {
+        next()
+    } else {
+        res.redirect('/login')
+    }
+}
 
-app.use('/productos', productsRouter);
 
-
-
-
-
-//REGISTER 
+//REGISTER POST
 
 app.post("/register", async (req, res) => {
 
@@ -41,7 +64,7 @@ app.post("/register", async (req, res) => {
 
 
     try {//Uso una condicion que checkea que el email del usuario que se registre no se repita
-        const usuarioExistente = await collection.findOne({ email: data.email });
+        const usuarioExistente = await users.findOne({ email: data.email });
         if (usuarioExistente) {
             res.send("Este usuario ya está registrado. Por favor elija otro.");
         }
@@ -49,7 +72,7 @@ app.post("/register", async (req, res) => {
         const hashedPassword = await bcrypt.hash(data.password, 10);  //con el hash proporcionado por el bcrypt la contraseña es privada
         data.password = hashedPassword;
 
-        const userData = await collection.insertMany(data);
+        const userData = await users.insertMany(data);
         console.log(userData)
 
 
@@ -61,63 +84,100 @@ app.post("/register", async (req, res) => {
     }
 });
 
-
-//LOGIN
+//LOGIN POST
 
 app.post("/login", async (req, res) => {
 
-    
-    try {
-        const check = await collection.findOne({email: req.body.email });
-        if (!check) {
-            res.send("El usuario no pudo ser encontrado")
+    const {email, password} = req.body; 
+
+        const user = await users.findOne({ email });
+
+        if (!user) {
+         
+            return res.redirect("/login");
         }
 
-        const contraseñaCoincide = await bcrypt.compare(req.body.password, check.password);
+        const contraseñaCoincide = await bcrypt.compare(password, user.password);
         if (contraseñaCoincide) {
             console.log("Inicio de sesion exitoso!")
-            res.render("page/home")
+            
         } else {
             console.log("Contraseña incorrecta")
-            res.send("Contraseña Incorrecta")
+          
+            return res.redirect("/login");
         }
 
-
-    } catch (error) {
-        console.log(error)
-        res.send("Error al procesar la solicitud")
-
-    }
-
+    req.session.isAuth = true;
+    res.redirect("/home");
+    
 });
+
+app.post("/logout", (req, res) => {
+    req.session.destroy((error) => {
+        if (error) throw error;
+        console.log("Cierre de sesion exitoso!")
+        res.redirect("/login");
+    });
+});
+
 
 //RUTAS GET
 
 app.get('/', (req, res) => {
-    res.render('page/home')
+    res.render('page/home', {
+        isAuth: req.session.isAuth})
+});
+
+app.get('/home', (req, res) =>{
+res.render('page/home', {isAuth: req.session.isAuth})
 });
 
 app.get('/about', (req, res) => {
-    res.render('page/about')
+    res.render('page/about', {
+        isAuth: req.session.isAuth})
 });
 
 app.get('/contact', (req, res) => {
-    res.render('page/contact')
+    res.render('page/contact', {
+        isAuth: req.session.isAuth})
 });
 
 
 app.get('/login', (req, res) => {
-    res.render('page/login')
+    res.render('page/login', {
+        isAuth: req.session.isAuth})
 });
 
 app.get('/register', (req, res) => {
-    res.render('page/register')
+    res.render('page/register', {
+        isAuth: req.session.isAuth})
 });
 
 
-app.get('/carro', (req, res) => {
-    res.render('page/carro', { carrito: req.session.carrito || [] });
+app.get('/favoritos', (req, res) => {
+    if (req.session.isAuth) {
+         res.render('page/favoritos', {
+             isAuth: req.session.isAuth,
+             favoritos: req.session.favoritos || []
+         });
+    } else {
+         
+        res.redirect('/login'); 
+     }
+ });
+
+app.get('/products-cart', (req, res)=>{
+    res.render("page/products-cart" , { isAuth: req.session.isAuth})
 });
+
+/*ruta get para obtener los productos*/
+app.get("/products", productsRouter);
+
+/*ruta post para agregar un producto a favoritos*/ 
+app.post("/favProducto/:id", isAuth, productsRouter);
+
+/*ruta para quitar un producto de favoritos*/
+app.post("/quitarFavorito/:id", isAuth, productsRouter);
 
 
 const iniciar = async () => {

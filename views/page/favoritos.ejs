@@ -1,12 +1,12 @@
 <%- include('../partials/head')%>
 
     <div class="title">
-        <h2 class="title">¡Catalogo de nuestros productos!</h2>
+        <h2 class="title">¡Mis productos favoritos!</h2>
     </div>
 
     <div class="product-container">
 
-        <% products.forEach(product=> { %>
+        <% favoritos.forEach(product=> { %>
 
             <div class="product-card">
                 <img src="/images/<%= product.imagen %>" alt="<%= product.nombre_producto %>" class="product-image">
@@ -26,13 +26,9 @@
                     <%= product.descripcion %>
                 </p>
                 <div class="product-botones">
-                    <form action="/products-cart" method="post">
-                        <button class="boton">Agregar</button>
+                    <form action="/quitarFavorito/<%= product.id %>" method="post">
+                        <button class="boton">Quitar producto</button>
                     </form> 
-
-                    <form action="/favProducto/<%= product.id %>" method="POST">
-                        <button class="boton" type="submit">Guardar</button>
-                    </form>
                 </div>
             </div>
             <% }); %>

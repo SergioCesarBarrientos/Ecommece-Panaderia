@@ -1,7 +1,8 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: "Homemade Apple", cursive;
+    font-family: "Baskervville SC", serif;
+    font-weight: 600;
     
 }
 
@@ -14,7 +15,8 @@ html, body {
     display: flex;
     justify-content: center;
     gap: 100px;
-    background-color: pink;
+    background-color: rgb(250, 168, 182);
+    padding-left: 35px;
 }
 
 .right-icons {
@@ -27,6 +29,11 @@ html, body {
     padding: 50px 0 0 5px;
     font-size: 35px;
     cursor: pointer;
+}
+
+.right-icons{
+    display: flex;
+    gap: 5px;
 }
 
 .left-icons i:hover,
@@ -334,7 +341,7 @@ html, body {
 }
 
 .product-card h3 {
-    padding: 30px 10px 10px 10px;
+    padding: 10px 10px 0 10px;
     font-weight: 600;
     letter-spacing: 3px;
     text-shadow: 0 3px 1px white;
@@ -376,7 +383,6 @@ html, body {
     width: 150px;
     height: 140px;
     border-radius: 5px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) ;
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
 

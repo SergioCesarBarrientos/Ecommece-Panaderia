@@ -1,16 +1,13 @@
 const express =require('express');
 const router = express.Router();
-const {obtenerProductos, comprarProducto, agregarProducto, quitarProducto, productoComprado} = require('../controllers/products')
+const {getProducts, favProduct, quitarFav} = require('../controllers/GetProducts')
 
 
+router.route('/products').get(getProducts);
 
-router.route('/productos').get(obtenerProductos);
+router.route('/favProducto/:id').post(favProduct); 
 
-router.route('/comprarProducto/:id').get(comprarProducto);
-
-router.route('/agregarProducto/:id').post(agregarProducto); 
-
-router.route('/quitarProducto/:id').post(quitarProducto); 
+router.route('/quitarFavorito/:id').post(quitarFav);
 
 
 module.exports = router;
